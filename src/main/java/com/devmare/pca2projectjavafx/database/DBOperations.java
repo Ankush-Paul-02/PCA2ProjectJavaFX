@@ -13,6 +13,7 @@ public class DBOperations {
             DBConnection dbConnection = new DBConnection();
             Connection connection = dbConnection.getConnection();
 
+            //! // SQL query to insert user details into the database
             String sqlQuery = "INSERT INTO user_deatails (USERNAME, ACCOUNT_NUM, BALANCE, SECURITY_CODE) VALUES (?,?,?,?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -30,17 +31,23 @@ public class DBOperations {
 
     public static String getAccountByAccountNumber(String accountNumber, String securityPin) {
         try {
+            //! Create a DBConnection instance to establish a database connection
             DBConnection dbConnection = new DBConnection();
             Connection connection = dbConnection.getConnection();
 
+            //! SQL query to select user details based on account number and security pin
             String sqlQuery = "SELECT * FROM user_deatails WHERE ACCOUNT_NUM = ? AND SECURITY_CODE = ?";
+
+            //! Prepare a PreparedStatement to execute the SQL query
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, accountNumber);
             preparedStatement.setString(2, securityPin);
 
+            //! Execute the SQL update statement
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                //! If a user is found, retrieve and format the user details
                 String username = resultSet.getString("USERNAME");
                 String balance = resultSet.getString("BALANCE");
 

@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class HandleShowAccountController {
 
-    @FXML
+    @FXML   //! Annotation indicating that this field is mapped to an FXML element
     private TextField accountNumberField;
 
     @FXML
@@ -26,10 +26,12 @@ public class HandleShowAccountController {
     @FXML
     private void goBack(ActionEvent event) {
         try {
+            //! Load the FXML file for the main page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/hello-view.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800, 650);
 
+            //! Get the current stage and set the scene to the main page scene
             Stage stage = (Stage) securityPinField.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
@@ -40,9 +42,12 @@ public class HandleShowAccountController {
 
     @FXML
     private void showAccount(ActionEvent event) {
+        //! Get the account number from the text field
         String accountNumber = accountNumberField.getText();
+        //! Get the security pin from the text field
         String securityPin = securityPinField.getText();
 
+        //! If both account number and security pin are provided, retrieve the account details
         if (!accountNumber.isEmpty() && !securityPin.isEmpty()) {
             String accountDetails = DBOperations.getAccountByAccountNumber(accountNumber, securityPin);
             userDetailsLabel.setText(accountDetails);

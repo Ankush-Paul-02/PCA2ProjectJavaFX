@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class HandleCreateAccountController {
 
-    @FXML
+    @FXML   //! Annotation indicating that this field is mapped to an FXML element
     private TextField usernameField;
 
     @FXML
@@ -26,11 +26,13 @@ public class HandleCreateAccountController {
 
     @FXML
     private void createAccount() {
+        //! Retrieve user input from the text fields
         String username = usernameField.getText();
         String accountNumber = accountNumberField.getText();
         String balance = balanceField.getText();
         String securityPin = pinField.getText();
 
+        //! Create an instance of DBOperations and add the account to the database
         DBOperations dbOperations = new DBOperations();
         dbOperations.addAccount(username, accountNumber, balance, securityPin);
 
@@ -48,10 +50,12 @@ public class HandleCreateAccountController {
     @FXML
     private void goBack() {
         try {
+            //! Load the FXML file for the main page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/hello-view.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800, 650);
 
+            //! Get the current stage and set the scene to the main page scene
             Stage stage = (Stage) pinField.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
