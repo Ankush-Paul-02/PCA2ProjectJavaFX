@@ -33,18 +33,22 @@ public class HandleCreateAccountController {
         String securityPin = pinField.getText();
 
         //! Create an instance of DBOperations and add the account to the database
-        DBOperations dbOperations = new DBOperations();
-        dbOperations.addAccount(username, accountNumber, balance, securityPin);
+        if (username == null || accountNumber == null || balance == null || securityPin == null) {
+            DBOperations dbOperations = new DBOperations();
+            dbOperations.addAccount(username, accountNumber, balance, securityPin);
 
-        System.out.println("User Name: " + username);
-        System.out.println("Account Number: " + accountNumber);
-        System.out.println("Balance: " + balance);
-        System.out.println("Security Code: " + securityPin);
+            System.out.println("User Name: " + username);
+            System.out.println("Account Number: " + accountNumber);
+            System.out.println("Balance: " + balance);
+            System.out.println("Security Code: " + securityPin);
 
-        usernameField.clear();
-        accountNumberField.clear();
-        balanceField.clear();
-        pinField.clear();
+            usernameField.clear();
+            accountNumberField.clear();
+            balanceField.clear();
+            pinField.clear();
+        } else {
+            System.out.println("Please enter all fields...");
+        }
     }
 
     @FXML
