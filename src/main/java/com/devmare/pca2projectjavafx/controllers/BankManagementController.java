@@ -50,4 +50,24 @@ public class BankManagementController {
             throw new RuntimeException();
         }
     }
+
+    @FXML
+    private void handleDeleteAccount(ActionEvent event) {
+        System.out.println("Delete Account button clicked...");
+        //! Load the FXML file for delete an account
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/views/delete-account.fxml"));
+        try {
+            //! Load the FXML file into a Parent node
+            Parent deleteAccount = fxmlLoader.load();
+            //! Create a Scene with the Parent node
+            Scene deleteAccountScene = new Scene(deleteAccount, 800, 650);
+
+            //! Get the current stage and set the scene to the Add Account scene
+            Stage deleteAccountStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            deleteAccountStage.setScene(deleteAccountScene);
+            deleteAccountStage.show();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
 }

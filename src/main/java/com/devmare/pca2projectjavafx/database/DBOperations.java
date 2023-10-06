@@ -59,4 +59,50 @@ public class DBOperations {
             throw new RuntimeException(e);
         }
     }
+
+    public static void deleteAccountByAccountNumber(String accountNumber, String securityPin) {
+        try {
+            //! Create a DBConnection instance to establish a database connection
+            DBConnection dbConnection = new DBConnection();
+            Connection connection = dbConnection.getConnection();
+
+            //! SQL query to select user details based on account number and security pin
+            String sqlQuery = "DELETE FROM user_deatails WHERE ACCOUNT_NUM =? AND SECURITY_CODE =?";
+
+            //! Prepare a PreparedStatement to execute the SQL query
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, accountNumber);
+            preparedStatement.setString(2, securityPin);
+
+            //! Execute the SQL update statement
+            preparedStatement.executeUpdate();
+            System.out.println("User Account Deleted Successfully...");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean doesAccountExist(String accountNumber) {
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection connection = dbConnection.getConnection();
+
+            //! SQL query to check if an account exists based on account number
+            String sqlQuery = "SELECT COUNT(*) FROM user_deatails WHERE ACCOUNT_NUM = ?";
+
+            //! Prepare a PreparedStatement to execute the SQL query
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, accountNumber);
+
+            //! Execute the SQL query and retrieve the result
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
