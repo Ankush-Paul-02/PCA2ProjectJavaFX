@@ -12,13 +12,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HandleDeleteAccountController {
+public class HandleUpdateAccountController {
 
-    @FXML   //! Annotation indicating that this field is mapped to an FXML element
+    @FXML
     private TextField accountNumberField;
 
     @FXML
     private TextField securityPinField;
+
+    @FXML
+    private TextField depositAmountField;
 
     @FXML
     private Label userDetailsLabel;
@@ -41,25 +44,35 @@ public class HandleDeleteAccountController {
     }
 
     @FXML
-    private void deleteAccount(ActionEvent event) {
-        //! Get the account number from the text field
+    private void updateAccount(ActionEvent event) {
         String accountNumber = accountNumberField.getText();
-        //! Get the security pin from the text field
         String securityPin = securityPinField.getText();
+        String depositAmount = depositAmountField.getText();
 
-        //! If both account number and security pin are provided, retrieve the account details
-        if (!accountNumber.isEmpty() && !securityPin.isEmpty()) {
+        boolean doesAccountExist = DBOperations.doesAccountExist(accountNumber);
 
-            boolean doesAccountExist = DBOperations.doesAccountExist(accountNumber);
+        if (doesAccountExist) {
+            //! If both account number,security pin, deposit amount are provided, retrieve the account details and deposit
+            if (!accountNumber.isEmpty() && !securityPin.isEmpty() && !depositAmount.isEmpty()) {
+                try {
+                    String balance = DBOperations.getBalanceByAccountNumber(accountNumber, securityPin);
+                    if (balance != null) {
+                        int currentBalance = Integer.parseInt(balance);
+                        int newBalance = currentBalance + Integer.parseInt(depositAmount);
+                        String updatedBalance = currentBalance + Integer.toString(newBalance);
+                        userDetailsLabel.setText("----------------------Account balance updated successfully----------------------\n----------------------balance: " + newBalance + "----------------------");
+                    } else {
 
-            if (doesAccountExist) {
-                DBOperations.deleteAccountByAccountNumber(accountNumber, securityPin);
-                userDetailsLabel.setText("User account deleted successfully with account number: " + accountNumber);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else {
-                userDetailsLabel.setText("No user found with the provided account number: " + accountNumber);
+                userDetailsLabel.setText("Please enter both account number and security pin.");
             }
         } else {
             userDetailsLabel.setText("Please enter valid account number and security pin.");
         }
     }
+
 }

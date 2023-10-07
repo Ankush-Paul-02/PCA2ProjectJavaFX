@@ -7,6 +7,9 @@ import java.sql.SQLException;
 
 public class DBOperations {
 
+    //! Create a DBConnection instance to establish a database connection
+    static DBConnection dbConnection = new DBConnection();
+
     public void addAccount(String username, String accountNumber, String balance, String securityPin) {
 
         try {
@@ -31,8 +34,6 @@ public class DBOperations {
 
     public static String getAccountByAccountNumber(String accountNumber, String securityPin) {
         try {
-            //! Create a DBConnection instance to establish a database connection
-            DBConnection dbConnection = new DBConnection();
             Connection connection = dbConnection.getConnection();
 
             //! SQL query to select user details based on account number and security pin
@@ -62,8 +63,6 @@ public class DBOperations {
 
     public static void deleteAccountByAccountNumber(String accountNumber, String securityPin) {
         try {
-            //! Create a DBConnection instance to establish a database connection
-            DBConnection dbConnection = new DBConnection();
             Connection connection = dbConnection.getConnection();
 
             //! SQL query to select user details based on account number and security pin
@@ -84,7 +83,6 @@ public class DBOperations {
 
     public static boolean doesAccountExist(String accountNumber) {
         try {
-            DBConnection dbConnection = new DBConnection();
             Connection connection = dbConnection.getConnection();
 
             //! SQL query to check if an account exists based on account number
@@ -105,4 +103,56 @@ public class DBOperations {
             throw new RuntimeException(e);
         }
     }
+
+    public static void updateAccountByAccountNumber(String accountNumber, String securityPin, String balance) {
+        try {
+            Connection connection = dbConnection.getConnection();
+            String sqlQuery = "UPDATE user_deatails SET BALANCE =? WHERE ACCOUNT_NUM =? AND SECURITY_CODE =?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+
+            preparedStatement.setString(1, balance);
+            preparedStatement.setString(2, accountNumber);
+            preparedStatement.setString(3, securityPin);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Account balance updated successfully.");
+            } else {
+                System.out.println("No account found with the provided account number and security pin.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getBalanceByAccountNumber(String accountNumber, String securityPin) {
+        try {
+            //! Create a DBConnection instance to establish a database connection
+            DBConnection dbConnection = new DBConnection();
+            Connection connection = dbConnection.getConnection();
+
+            //! SQL query to select balance based on account number and security pin
+            String sqlQuery = "SELECT BALANCE FROM user_deatails WHERE ACCOUNT_NUM = ? AND SECURITY_CODE = ?";
+
+            //! Prepare a PreparedStatement to execute the SQL query
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, accountNumber);
+            preparedStatement.setString(2, securityPin);
+
+            //! Execute the SQL select statement
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                //! If a user is found, retrieve and return the balance
+                return resultSet.getString("BALANCE");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
