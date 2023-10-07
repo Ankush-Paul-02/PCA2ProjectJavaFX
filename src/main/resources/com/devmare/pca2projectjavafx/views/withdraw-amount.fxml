@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.devmare.pca2projectjavafx.controllers.HandleDepositAmountController"
+      fx:controller="com.devmare.pca2projectjavafx.controllers.HandleWithDrawAmountController"
       prefHeight="400.0" prefWidth="600.0"
       alignment="CENTER"
       spacing="10">
 
-    <Label text="Deposit Amount Page" style="-fx-font-size: 36px; -fx-font-weight: bold;">
+    <Label text="Withdraw Amount Page" style="-fx-font-size: 36px; -fx-font-weight: bold;">
         <padding>
             <javafx.geometry.Insets bottom="20"/>
         </padding>
@@ -31,14 +31,14 @@
         </VBox.margin>
     </TextField>
 
-    <TextField fx:id="depositAmountField" promptText="Deposit Amount"
+    <TextField fx:id="withAmountField" promptText="Withdraw Amount"
                style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-pref-height: 40px; -fx-pref-width: 200px; -fx-padding: 0 10 0 10;">
         <VBox.margin>
             <javafx.geometry.Insets left="10" right="10"/>
         </VBox.margin>
     </TextField>
 
-    <Button text="Show" onAction="#depositMoney"
+    <Button text="Withdraw" onAction="#withdrawMoney"
             style="-fx-font-size: 18px; -fx-padding: 10 20; -fx-min-width: 200px;"/>
     <Button text="Back" onAction="#goBack"
             style="-fx-font-size: 18px; -fx-padding: 10 20; -fx-min-width: 200px;"/>

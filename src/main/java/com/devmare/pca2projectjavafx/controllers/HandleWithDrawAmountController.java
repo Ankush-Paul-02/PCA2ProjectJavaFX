@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HandleUpdateAccountController {
+public class HandleWithDrawAmountController {
 
     @FXML
     private TextField accountNumberField;
@@ -21,7 +21,7 @@ public class HandleUpdateAccountController {
     private TextField securityPinField;
 
     @FXML
-    private TextField depositAmountField;
+    private TextField withAmountField;
 
     @FXML
     private Label userDetailsLabel;
@@ -44,28 +44,33 @@ public class HandleUpdateAccountController {
     }
 
     @FXML
-    private void updateAccount(ActionEvent event) {
+    private void withdrawMoney(ActionEvent event) {
         String accountNumber = accountNumberField.getText();
         String securityPin = securityPinField.getText();
-        String depositAmount = depositAmountField.getText();
+        String withdrawAmount = withAmountField.getText();
 
         boolean doesAccountExist = DBOperations.doesAccountExist(accountNumber);
 
         if (doesAccountExist) {
             //! If both account number,security pin, deposit amount are provided, retrieve the account details and deposit
-            if (!accountNumber.isEmpty() && !securityPin.isEmpty() && !depositAmount.isEmpty()) {
+            if (!accountNumber.isEmpty() && !securityPin.isEmpty() && !withdrawAmount.isEmpty()) {
                 try {
                     String balance = DBOperations.getBalanceByAccountNumber(accountNumber, securityPin);
                     if (balance != null) {
-                        int currentBalance = Integer.parseInt(balance);
-                        int newBalance = currentBalance + Integer.parseInt(depositAmount);
-                        String updatedBalance = currentBalance + Integer.toString(newBalance);
-                        userDetailsLabel.setText("----------------------Account balance updated successfully----------------------\n----------------------balance: " + newBalance + "----------------------");
-                    } else {
 
+                        int currentBalance = Integer.parseInt(balance);
+                        if (currentBalance >= Integer.parseInt(withdrawAmount)) {
+                            int newBalance = currentBalance - Integer.parseInt(withdrawAmount);
+                            DBOperations.updateAccountByAccountNumber(accountNumber, securityPin, Integer.toString(newBalance));
+                            userDetailsLabel.setText("----------------------Amount withdrawal successfull----------------------\n------------------------------balance: " + newBalance + "------------------------------");
+                        } else {
+                            userDetailsLabel.setText("You don't have sufficient balance to withdraw from the account");
+                        }
+                    } else {
+                        userDetailsLabel.setText("Something went wrong!");
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    userDetailsLabel.setText(e.getMessage());
                 }
             } else {
                 userDetailsLabel.setText("Please enter both account number and security pin.");

@@ -19,6 +19,8 @@
                 style="-fx-font-size: 18px; -fx-padding: 10 20; -fx-min-width: 200px;"/>
         <Button text="Deposit Amount" onAction="#handleDepositAmount"
                 style="-fx-font-size: 18px; -fx-padding: 10 20; -fx-min-width: 200px;"/>
+        <Button text="Withdraw Amount" onAction="#handleWithdrawAmount"
+                style="-fx-font-size: 18px; -fx-padding: 10 20; -fx-min-width: 200px;"/>
         <Button text="Delete Account" onAction="#handleDeleteAccount"
                 style="-fx-font-size: 18px; -fx-padding: 10 20; -fx-min-width: 200px;"/>
     </children>

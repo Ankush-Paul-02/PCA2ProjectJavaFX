@@ -73,9 +73,29 @@ public class BankManagementController {
 
     @FXML
     private void handleDepositAmount(ActionEvent event) {
-        System.out.println("Update Account button clicked...");
+        System.out.println("Deposit Amount button clicked...");
         //! Load the FXML file for update an account
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/views/deposit-amount.fxml"));
+        try {
+            //! Load the FXML file into a Parent node
+            Parent updateAccount = fxmlLoader.load();
+            //! Create a Scene with the Parent node
+            Scene updateAccountScene = new Scene(updateAccount, 800, 650);
+
+            //! Get the current stage and set the scene to the Add Account scene
+            Stage updateAccountStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            updateAccountStage.setScene(updateAccountScene);
+            updateAccountStage.show();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @FXML
+    private void handleWithdrawAmount(ActionEvent event) {
+        System.out.println("Withdraw Amount button clicked...");
+        //! Load the FXML file for update an account
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/views/withdraw-amount.fxml"));
         try {
             //! Load the FXML file into a Parent node
             Parent updateAccount = fxmlLoader.load();

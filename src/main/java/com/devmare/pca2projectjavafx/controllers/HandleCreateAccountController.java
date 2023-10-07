@@ -33,7 +33,7 @@ public class HandleCreateAccountController {
         String securityPin = pinField.getText();
 
         //! Create an instance of DBOperations and add the account to the database
-        if (username == null || accountNumber == null || balance == null || securityPin == null) {
+        if (!username.isEmpty() || !accountNumber.isEmpty() || !balance.isEmpty() || !securityPin.isEmpty()) {
             DBOperations dbOperations = new DBOperations();
             dbOperations.addAccount(username, accountNumber, balance, securityPin);
 

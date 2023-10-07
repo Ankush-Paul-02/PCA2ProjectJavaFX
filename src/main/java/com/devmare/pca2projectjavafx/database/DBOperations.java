@@ -17,7 +17,7 @@ public class DBOperations {
             Connection connection = dbConnection.getConnection();
 
             //! // SQL query to insert user details into the database
-            String sqlQuery = "INSERT INTO user_deatails (USERNAME, ACCOUNT_NUM, BALANCE, SECURITY_CODE) VALUES (?,?,?,?)";
+            String sqlQuery = "INSERT INTO users (USERNAME, ACCOUNT_NUM, BALANCE, SECURITY_CODE) VALUES (?,?,?,?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setString(1, username);
@@ -37,7 +37,7 @@ public class DBOperations {
             Connection connection = dbConnection.getConnection();
 
             //! SQL query to select user details based on account number and security pin
-            String sqlQuery = "SELECT * FROM user_deatails WHERE ACCOUNT_NUM = ? AND SECURITY_CODE = ?";
+            String sqlQuery = "SELECT * FROM users WHERE ACCOUNT_NUM = ? AND SECURITY_CODE = ?";
 
             //! Prepare a PreparedStatement to execute the SQL query
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -66,7 +66,7 @@ public class DBOperations {
             Connection connection = dbConnection.getConnection();
 
             //! SQL query to select user details based on account number and security pin
-            String sqlQuery = "DELETE FROM user_deatails WHERE ACCOUNT_NUM =? AND SECURITY_CODE =?";
+            String sqlQuery = "DELETE FROM users WHERE ACCOUNT_NUM =? AND SECURITY_CODE =?";
 
             //! Prepare a PreparedStatement to execute the SQL query
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -86,7 +86,7 @@ public class DBOperations {
             Connection connection = dbConnection.getConnection();
 
             //! SQL query to check if an account exists based on account number
-            String sqlQuery = "SELECT COUNT(*) FROM user_deatails WHERE ACCOUNT_NUM = ?";
+            String sqlQuery = "SELECT COUNT(*) FROM users WHERE ACCOUNT_NUM = ?";
 
             //! Prepare a PreparedStatement to execute the SQL query
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -107,7 +107,7 @@ public class DBOperations {
     public static void updateAccountByAccountNumber(String accountNumber, String securityPin, String balance) {
         try {
             Connection connection = dbConnection.getConnection();
-            String sqlQuery = "UPDATE user_deatails SET BALANCE =? WHERE ACCOUNT_NUM =? AND SECURITY_CODE =?";
+            String sqlQuery = "UPDATE users SET BALANCE =? WHERE ACCOUNT_NUM =? AND SECURITY_CODE =?";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 
             preparedStatement.setString(1, balance);
@@ -133,7 +133,7 @@ public class DBOperations {
             Connection connection = dbConnection.getConnection();
 
             //! SQL query to select balance based on account number and security pin
-            String sqlQuery = "SELECT BALANCE FROM user_deatails WHERE ACCOUNT_NUM = ? AND SECURITY_CODE = ?";
+            String sqlQuery = "SELECT BALANCE FROM users WHERE ACCOUNT_NUM = ? AND SECURITY_CODE = ?";
 
             //! Prepare a PreparedStatement to execute the SQL query
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
