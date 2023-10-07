@@ -38,7 +38,7 @@
         </VBox.margin>
     </TextField>
 
-    <Button text="Show" onAction="#depositMoney"
+    <Button text="Deposit" onAction="#depositMoney"
             style="-fx-font-size: 18px; -fx-padding: 10 20; -fx-min-width: 200px;"/>
     <Button text="Back" onAction="#goBack"
             style="-fx-font-size: 18px; -fx-padding: 10 20; -fx-min-width: 200px;"/>

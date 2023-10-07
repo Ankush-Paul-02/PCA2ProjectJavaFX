@@ -9,7 +9,7 @@
       alignment="CENTER"
       spacing="10">
 
-    <Label text="Show Account Page" style="-fx-font-size: 36px; -fx-font-weight: bold;">
+    <Label text="Account Details" style="-fx-font-size: 36px; -fx-font-weight: bold;">
         <padding>
             <javafx.geometry.Insets bottom="20"/>
         </padding>

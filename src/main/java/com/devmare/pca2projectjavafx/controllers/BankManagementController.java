@@ -35,7 +35,7 @@ public class BankManagementController {
     private void handleShowAccount(ActionEvent event) {
         System.out.println("Show account button clicked...");
         //! Load the FXML file for adding an account
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/views/show-account.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/views/account-details.fxml"));
         try {
             //! Load the FXML file into a Parent node
             Parent showAccount = fxmlLoader.load();
@@ -110,4 +110,22 @@ public class BankManagementController {
             throw new RuntimeException();
         }
     }
+
+    @FXML
+    private void goBack(ActionEvent event) {
+        try {
+            // Load the FXML file for the previous page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/hello-view.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 800, 600);
+
+            // Get the current stage and set the scene to the previous page scene
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

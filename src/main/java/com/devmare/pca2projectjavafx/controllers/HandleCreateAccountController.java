@@ -1,10 +1,12 @@
 package com.devmare.pca2projectjavafx.controllers;
 
 import com.devmare.pca2projectjavafx.database.DBOperations;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -25,6 +27,9 @@ public class HandleCreateAccountController {
     private TextField pinField;
 
     @FXML
+    private Label userDetailsLabel;
+
+    @FXML
     private void createAccount() {
         //! Retrieve user input from the text fields
         String username = usernameField.getText();
@@ -36,6 +41,9 @@ public class HandleCreateAccountController {
         if (!username.isEmpty() || !accountNumber.isEmpty() || !balance.isEmpty() || !securityPin.isEmpty()) {
             DBOperations dbOperations = new DBOperations();
             dbOperations.addAccount(username, accountNumber, balance, securityPin);
+
+            String accountDetails = DBOperations.getAccountByAccountNumber(accountNumber, securityPin);
+            userDetailsLabel.setText(accountDetails);
 
             System.out.println("User Name: " + username);
             System.out.println("Account Number: " + accountNumber);
@@ -52,15 +60,15 @@ public class HandleCreateAccountController {
     }
 
     @FXML
-    private void goBack() {
+    private void goBack(ActionEvent event) {
         try {
             //! Load the FXML file for the main page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/hello-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/views/admin-page.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800, 650);
 
             //! Get the current stage and set the scene to the main page scene
-            Stage stage = (Stage) pinField.getScene().getWindow();
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

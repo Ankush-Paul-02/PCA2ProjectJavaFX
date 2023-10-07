@@ -30,12 +30,12 @@ public class HandleWithDrawAmountController {
     private void goBack(ActionEvent event) {
         try {
             //! Load the FXML file for the main page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/hello-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/devmare/pca2projectjavafx/views/user-page.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800, 650);
 
             //! Get the current stage and set the scene to the main page scene
-            Stage stage = (Stage) securityPinField.getScene().getWindow();
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
