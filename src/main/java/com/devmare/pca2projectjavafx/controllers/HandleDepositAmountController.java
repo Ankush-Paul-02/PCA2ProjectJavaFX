@@ -57,15 +57,19 @@ public class HandleDepositAmountController {
                 try {
                     String balance = DBOperations.getBalanceByAccountNumber(accountNumber, securityPin);
                     if (balance != null) {
-                        int currentBalance = Integer.parseInt(balance);
-                        int newBalance = currentBalance + Integer.parseInt(depositAmount);
-                        DBOperations.updateAccountByAccountNumber(accountNumber, securityPin, Integer.toString(newBalance));
-                        userDetailsLabel.setText("----------------------Account balance updated successfully----------------------\n----------------------balance: " + newBalance + "----------------------");
+                        if (securityPin.length() >= 6) {
+                            int currentBalance = Integer.parseInt(balance);
+                            int newBalance = currentBalance + Integer.parseInt(depositAmount);
+                            DBOperations.updateAccountByAccountNumber(accountNumber, securityPin, Integer.toString(newBalance));
+                            userDetailsLabel.setText("----------------------Account balance updated successfully----------------------\n----------------------balance: " + newBalance + "----------------------");
+                        } else {
+                            userDetailsLabel.setText("Security code must be at least 6 characters long!");
+                        }
                     } else {
-
+                        userDetailsLabel.setText("Something went wrong!");
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    userDetailsLabel.setText(e.getMessage());
                 }
             } else {
                 userDetailsLabel.setText("Please enter both account number and security pin.");
@@ -74,5 +78,4 @@ public class HandleDepositAmountController {
             userDetailsLabel.setText("Please enter valid account number and security pin.");
         }
     }
-
 }

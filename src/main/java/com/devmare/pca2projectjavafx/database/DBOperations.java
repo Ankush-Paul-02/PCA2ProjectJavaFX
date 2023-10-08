@@ -13,10 +13,9 @@ public class DBOperations {
     public void addAccount(String username, String accountNumber, String balance, String securityPin) {
 
         try {
-            DBConnection dbConnection = new DBConnection();
             Connection connection = dbConnection.getConnection();
 
-            //! // SQL query to insert user details into the database
+            //! SQL query to insert user details into the database
             String sqlQuery = "INSERT INTO users (USERNAME, ACCOUNT_NUM, BALANCE, SECURITY_CODE) VALUES (?,?,?,?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -128,8 +127,6 @@ public class DBOperations {
 
     public static String getBalanceByAccountNumber(String accountNumber, String securityPin) {
         try {
-            //! Create a DBConnection instance to establish a database connection
-            DBConnection dbConnection = new DBConnection();
             Connection connection = dbConnection.getConnection();
 
             //! SQL query to select balance based on account number and security pin
@@ -153,6 +150,4 @@ public class DBOperations {
             throw new RuntimeException(e);
         }
     }
-
-
 }

@@ -40,22 +40,31 @@ public class HandleCreateAccountController {
         //! Create an instance of DBOperations and add the account to the database
         if (!username.isEmpty() || !accountNumber.isEmpty() || !balance.isEmpty() || !securityPin.isEmpty()) {
             DBOperations dbOperations = new DBOperations();
-            dbOperations.addAccount(username, accountNumber, balance, securityPin);
 
-            String accountDetails = DBOperations.getAccountByAccountNumber(accountNumber, securityPin);
-            userDetailsLabel.setText(accountDetails);
+            if (!DBOperations.doesAccountExist(accountNumber)) {
+                if (securityPin.length() >= 6) {
+                    dbOperations.addAccount(username, accountNumber, balance, securityPin);
 
-            System.out.println("User Name: " + username);
-            System.out.println("Account Number: " + accountNumber);
-            System.out.println("Balance: " + balance);
-            System.out.println("Security Code: " + securityPin);
+                    String accountDetails = DBOperations.getAccountByAccountNumber(accountNumber, securityPin);
+                    userDetailsLabel.setText(accountDetails);
 
-            usernameField.clear();
-            accountNumberField.clear();
-            balanceField.clear();
-            pinField.clear();
+                    System.out.println("User Name: " + username);
+                    System.out.println("Account Number: " + accountNumber);
+                    System.out.println("Balance: " + balance);
+                    System.out.println("Security Code: " + securityPin);
+
+                    usernameField.clear();
+                    accountNumberField.clear();
+                    balanceField.clear();
+                    pinField.clear();
+                } else {
+                    userDetailsLabel.setText("Security code must be at least 6 characters long!");
+                }
+            } else {
+                userDetailsLabel.setText("Account number: " + accountNumber + " is already exists!");
+            }
         } else {
-            System.out.println("Please enter all fields...");
+            userDetailsLabel.setText("Please enter all required fields!");
         }
     }
 

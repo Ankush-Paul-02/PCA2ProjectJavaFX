@@ -53,11 +53,17 @@ public class HandleDeleteAccountController {
             boolean doesAccountExist = DBOperations.doesAccountExist(accountNumber);
 
             if (doesAccountExist) {
-                DBOperations.deleteAccountByAccountNumber(accountNumber, securityPin);
-                userDetailsLabel.setText("User account deleted successfully with account number: " + accountNumber);
+                if (securityPin.length() >= 6) {
+                    DBOperations.deleteAccountByAccountNumber(accountNumber, securityPin);
+                    userDetailsLabel.setText("User account deleted successfully with account number: " + accountNumber);
+                } else {
+                    userDetailsLabel.setText("Security code must be at least 6 characters long!");
+                }
             } else {
                 userDetailsLabel.setText("No user found with the provided account number: " + accountNumber);
             }
+            accountNumberField.clear();
+            securityPinField.clear();
         } else {
             userDetailsLabel.setText("Please enter valid account number and security pin.");
         }

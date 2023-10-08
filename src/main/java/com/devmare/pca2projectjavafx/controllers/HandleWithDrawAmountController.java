@@ -57,14 +57,17 @@ public class HandleWithDrawAmountController {
                 try {
                     String balance = DBOperations.getBalanceByAccountNumber(accountNumber, securityPin);
                     if (balance != null) {
-
-                        int currentBalance = Integer.parseInt(balance);
-                        if (currentBalance >= Integer.parseInt(withdrawAmount)) {
-                            int newBalance = currentBalance - Integer.parseInt(withdrawAmount);
-                            DBOperations.updateAccountByAccountNumber(accountNumber, securityPin, Integer.toString(newBalance));
-                            userDetailsLabel.setText("----------------------Amount withdrawal successfull----------------------\n------------------------------balance: " + newBalance + "------------------------------");
+                        if (securityPin.length() >= 6) {
+                            int currentBalance = Integer.parseInt(balance);
+                            if (currentBalance >= Integer.parseInt(withdrawAmount)) {
+                                int newBalance = currentBalance - Integer.parseInt(withdrawAmount);
+                                DBOperations.updateAccountByAccountNumber(accountNumber, securityPin, Integer.toString(newBalance));
+                                userDetailsLabel.setText("----------------------Amount withdrawal successfull----------------------\n------------------------------balance: " + newBalance + "------------------------------");
+                            } else {
+                                userDetailsLabel.setText("You don't have sufficient balance to withdraw from the account");
+                            }
                         } else {
-                            userDetailsLabel.setText("You don't have sufficient balance to withdraw from the account");
+                            userDetailsLabel.setText("Security code must be at least 6 characters long!");
                         }
                     } else {
                         userDetailsLabel.setText("Something went wrong!");

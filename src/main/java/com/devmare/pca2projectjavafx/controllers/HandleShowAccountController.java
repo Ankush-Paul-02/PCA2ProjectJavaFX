@@ -49,8 +49,12 @@ public class HandleShowAccountController {
 
         //! If both account number and security pin are provided, retrieve the account details
         if (!accountNumber.isEmpty() && !securityPin.isEmpty()) {
-            String accountDetails = DBOperations.getAccountByAccountNumber(accountNumber, securityPin);
-            userDetailsLabel.setText(accountDetails);
+            if (securityPin.length() >= 6) {
+                String accountDetails = DBOperations.getAccountByAccountNumber(accountNumber, securityPin);
+                userDetailsLabel.setText(accountDetails);
+            } else {
+                userDetailsLabel.setText("Security code must be at least 6 characters long!");
+            }
         } else {
             userDetailsLabel.setText("Please enter both account number and security pin.");
         }
